@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+          :root {
+      --primary-color: #6c63ff;
+      --secondary-color: #4d44db;
+      --dark-color: #2a2a2a;
+      --light-color: #f8f9fa;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+      --border-radius: 12px;
+      --box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .btn-p {
+      background-color: var(--primary-color);
+      color: white !important;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-weight: 500;
+      width: 100%;
+      margin-top: 15px;
+    }
+        /* Back Link */
+        a[href="/"] {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s ease;
+        }
+        
+      
+        
+        /* Heading */
+        h2 {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 3rem;
+            height: 0.25rem;
+            background: #6c63ff;
+            border-radius: 0.125rem;
+        }
+        
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-0.25rem);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+        
+        .card-text {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Empty Cart Message */
+        p {
+            text-align: center;
+            color: #666;
+            padding: 2rem 0;
+        }
+        
+        /* Responsive Grid */
+        @media (max-width: 768px) {
+            .col-md-4 {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <a href="/" style="border-bottom: none; color: black;">
+            <i class="ri-arrow-left-line"></i> Back to Home
+        </a>
+        <h2>Your Cart</h2>
+        <% const validCart = cart.filter(item => item.product); %>
+        <% if (validCart.length > 0) { %>
+            <div class="row">
+                <% validCart.forEach(item => { %>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <% if (item.product.image && item.product.image.data) { %>
+                                <img src="data:<%= item.product.image.contentType %>;base64,<%= item.product.image.data.toString('base64') %>" class="card-img-top" alt="<%= item.product.Name %>">
+                            <% } %>
+                            <div class="card-body">
+                                <h5 class="card-title"><%= item.product.Name %></h5>
+                                <p class="card-text"><strong>Price:</strong> $<%= item.product.price %></p>
+                                <p class="card-text"><strong>Quantity:</strong> <%= item.quantity %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+        <div class="d-flex flex-column align-items-center justify-content-center" style="height: 50vh;">
+          <h4 class="mb-4">No products in cart</h4>
+          <a href="/" class="btn-p">Add Products</a>
+        </div>
+      <% } %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
